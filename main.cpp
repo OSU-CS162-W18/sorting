@@ -84,6 +84,46 @@ void merge_sort(std::vector<T>& array) {
 }
 
 
+template <class T>
+int partition(std::vector<T>& array, int lo, int hi) {
+  T pivot = array[lo];
+
+  while (true) {
+    while (array[lo] < pivot) {
+      lo++;
+    }
+
+    while (array[hi] > pivot) {
+      hi--;
+    }
+
+    if (lo >= hi) {
+      return hi;
+    }
+
+    swap(array[hi], array[lo]);
+  }
+}
+
+
+template <class T>
+void quicksort_recursive(std::vector<T>& array, int lo, int hi) {
+
+  if (lo < hi) {
+    int p = partition(array, lo, hi);
+    quicksort_recursive(array, lo, p);
+    quicksort_recursive(array, p+1, hi);
+  }
+
+}
+
+
+template <class T>
+void quicksort(std::vector<T>& array) {
+  quicksort_recursive(array, 0, array.size() - 1);
+}
+
+
 int main() {
   std::vector<int> vec;
   for (int i = 0; i < 16; i++) {
@@ -96,7 +136,7 @@ int main() {
   }
   std::cout << std::endl;
 
-  merge_sort(vec);
+  quicksort(vec);
 
   std::cout << "After sorting:";
   for (int i = 0; i < vec.size(); i++) {
